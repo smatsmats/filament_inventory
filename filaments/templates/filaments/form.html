@@ -1,0 +1,8 @@
+{% extends "filaments/base.html" %}
+{% block content %}
+<h2>{% if obj %}Edit{% else %}Add{% endif %} roll</h2>
+<form method="post" class="f">{% csrf_token %}
+ {{ form.as_p }}
+ <button>Save</button> <a href="{% url 'filament_list' %}">cancel</a>
+</form>
+{% endblock %}

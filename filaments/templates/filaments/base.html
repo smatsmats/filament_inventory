@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Filament Tracker</title>
+<style>
+body{font-family:system-ui,sans-serif;margin:1rem auto;max-width:1300px;padding:0 1rem}
+nav{display:flex;gap:1rem;align-items:center;margin-bottom:1rem}
+nav form{display:inline;margin-left:auto}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{border-bottom:1px solid #ddd;padding:.35rem .5rem;text-align:left;vertical-align:top}
+td.n,th.n{text-align:right}
+tr.used{color:#888}
+form.f p{margin:.5rem 0}
+form.f label{display:block;font-weight:600}
+form.f input,form.f textarea,form.f select{width:100%;max-width:28rem;box-sizing:border-box}
+.err,.errorlist{color:#b00}
+.btn,button{padding:.3rem .7rem}
+</style></head><body>
+<nav><a href="{% url 'filament_list' %}"><strong>Filament Tracker</strong></a>
+{% if user.is_authenticated %}<a href="{% url 'filament_new' %}">+ Add roll</a>
+{% if user.is_staff %}<a href="{% url 'admin:index' %}">Admin</a>{% endif %}
+<form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Log out ({{ user.username }})</button></form>{% endif %}</nav>
+{% block content %}{% endblock %}
+</body></html>

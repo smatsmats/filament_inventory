@@ -1,0 +1,6 @@
+{% extends "filaments/base.html" %}
+{% block content %}
+<h2>Delete roll?</h2>
+<p>{{ obj }}</p>
+<form method="post">{% csrf_token %}<button>Delete</button> <a href="{% url 'filament_list' %}">cancel</a></form>
+{% endblock %}

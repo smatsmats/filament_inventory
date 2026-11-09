@@ -1,0 +1,30 @@
+{% extends "filaments/base.html" %}
+{% block content %}
+<form method="get">
+ <input name="q" value="{{ q }}" placeholder="Search">
+ <select name="status">
+  <option value="">All rolls</option>
+  <option value="active" {% if status == 'active' %}selected{% endif %}>In use / unused</option>
+  <option value="used" {% if status == 'used' %}selected{% endif %}>Used up</option>
+ </select>
+ <button>Filter</button> <a href="{% url 'filament_list' %}">reset</a>
+</form>
+<p>{{ filaments|length }} roll{{ filaments|length|pluralize }}</p>
+<table>
+<thead><tr><th>Brand</th><th>Store Code</th><th>Make Code</th><th>Model</th><th>Type</th>
+<th class="n">Quantity (g)</th><th class="n">Price</th><th class="n">Price / g</th><th>Texture</th><th>Color</th>
+<th>NFC</th><th>Source</th><th>Bought</th><th>Used-up</th><th>Notes</th><th></th></tr></thead>
+<tbody>
+{% for f in filaments %}
+<tr {% if f.used_up %}class="used"{% endif %}>
+ <td>{{ f.brand }}</td><td>{{ f.store_code }}</td><td>{{ f.make_code }}</td><td>{{ f.model }}</td><td>{{ f.type }}</td>
+ <td class="n">{{ f.quantity_grams }}</td><td class="n">{% if f.price is not None %}${{ f.price }}{% endif %}</td>
+ <td class="n">{% if f.price_per_gram is not None %}${{ f.price_per_gram }}{% endif %}</td>
+ <td>{{ f.texture }}</td><td>{{ f.color }}</td><td>{{ f.nfc }}</td><td>{{ f.source }}</td>
+ <td>{{ f.bought|date:"Y-m-d" }}</td><td>{{ f.used_up|date:"Y-m-d" }}</td><td>{{ f.notes|truncatechars:60 }}</td>
+ <td><a href="{% url 'filament_edit' f.pk %}">edit</a> <a href="{% url 'filament_delete' f.pk %}">delete</a></td>
+</tr>
+{% empty %}<tr><td colspan="16">No rolls yet.</td></tr>
+{% endfor %}
+</tbody></table>
+{% endblock %}
