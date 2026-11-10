@@ -4,6 +4,8 @@ Track 3D-printer filament rolls: Brand, Store Code, Make Code, Model, Type,
 Quantity (grams), Price, Price / gram (auto-calculated), Texture, Color, NFC,
 Source, Bought, Used-up, Notes. Login required; add/edit/delete/search in the UI,
 bulk management in `/admin/`.
+Bulk-load rolls from a CSV via **Import CSV** (`/import/`): header row required, columns matched by
+field name or label (Brand required; Price / gram is ignored); all-or-nothing on errors.
 
 ## Run locally
     python -m venv .venv && .venv/bin/pip install -r requirements.txt
@@ -23,7 +25,8 @@ The container runs `migrate` on startup.
     gcloud services enable run.googleapis.com sqladmin.googleapis.com artifactregistry.googleapis.com cloudbuild.googleapis.com secretmanager.googleapis.com
 
     # Database
-    gcloud sql instances create filaments-db --database-version=POSTGRES_16 --tier=db-f1-micro --region=$REGION
+#    gcloud sql instances create filaments-db --database-version=POSTGRES_16 --tier=db-f1-micro --region=$REGION
+    gcloud sql instances create filaments-db --database-version=POSTGRES_18 --tier=db-perf-optimized-N-2 --region=$REGION
     gcloud sql databases create filaments --instance=filaments-db
     DBPASS=$(openssl rand -hex 16)
     gcloud sql users create filaments --instance=filaments-db --password=$DBPASS

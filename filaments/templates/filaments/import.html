@@ -1,0 +1,12 @@
+{% extends "filaments/base.html" %}
+{% block content %}
+<h2>Import rolls from CSV</h2>
+<p>The first row must be a header. Columns are matched by name (Brand, Store Code, Make Code, Model, Type,
+Quantity (grams), Price, Texture, Color, NFC, Source, Bought, Used-up, Notes); unknown columns, including
+Price / gram, are ignored. Brand is required. Dates: YYYY-MM-DD or MM/DD/YYYY. Nothing is imported if any row has an error.</p>
+{% if errors %}<ul class="errorlist">{% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>{% endif %}
+<form method="post" enctype="multipart/form-data" class="f">{% csrf_token %}
+ {{ form.as_p }}
+ <button>Upload</button> <a href="{% url 'filament_list' %}">cancel</a>
+</form>
+{% endblock %}

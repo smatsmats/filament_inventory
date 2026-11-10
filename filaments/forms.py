@@ -12,3 +12,7 @@ class FilamentForm(forms.ModelForm):
             "used_up": forms.DateInput(attrs={"type": "date"}, format="%Y-%m-%d"),
             "notes": forms.Textarea(attrs={"rows": 3}),
         }
+
+
+class CsvImportForm(forms.Form):
+    file = forms.FileField(label="CSV file")

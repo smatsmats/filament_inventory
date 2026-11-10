@@ -17,7 +17,9 @@ form.f input,form.f textarea,form.f select{width:100%;max-width:28rem;box-sizing
 </style></head><body>
 <nav><a href="{% url 'filament_list' %}"><strong>Filament Tracker</strong></a>
 {% if user.is_authenticated %}<a href="{% url 'filament_new' %}">+ Add roll</a>
+<a href="{% url 'filament_import' %}">Import CSV</a>
 {% if user.is_staff %}<a href="{% url 'admin:index' %}">Admin</a>{% endif %}
 <form method="post" action="{% url 'logout' %}">{% csrf_token %}<button>Log out ({{ user.username }})</button></form>{% endif %}</nav>
+{% for m in messages %}<p>{{ m }}</p>{% endfor %}
 {% block content %}{% endblock %}
 </body></html>
